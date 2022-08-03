@@ -1,7 +1,6 @@
 package com.nilhcem.fakesmtp;
 
-import java.awt.EventQueue;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
@@ -77,7 +76,11 @@ public final class FakeSMTP {
 					try {
 						URL envelopeImage = getClass().getResource(Configuration.INSTANCE.get("application.icon.path"));
 						if (envelopeImage != null) {
-							Application.getApplication().setDockIconImage(Toolkit.getDefaultToolkit().getImage(envelopeImage));
+//							Application.getApplication().setDockIconImage(Toolkit.getDefaultToolkit().getImage(envelopeImage));
+							final Toolkit defaultToolkit = Toolkit.getDefaultToolkit();
+							final Image image = defaultToolkit.getImage(envelopeImage);
+							final Taskbar taskbar = Taskbar.getTaskbar();
+							taskbar.setIconImage(image);
 						}
 					} catch (RuntimeException e) {
 						LOGGER.debug("Error: {} - This is probably because we run on a non-Mac platform and these components are not implemented", e.getMessage());
